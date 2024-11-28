@@ -1,0 +1,6 @@
+@StoreCenter.Api_HostAddress = http://localhost:5100
+
+GET {{StoreCenter.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
