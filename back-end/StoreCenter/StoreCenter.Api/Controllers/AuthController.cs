@@ -23,7 +23,7 @@ namespace StoreCenter.Api.Controllers
                 return Unauthorized();
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("YourSecretKeyHere!123&KeepitSecret"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Thisis@secreteKey&KeepitSecret&Dontdiscloseit"));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -33,8 +33,8 @@ namespace StoreCenter.Api.Controllers
         };
 
             var token = new JwtSecurityToken(
-                issuer: "yourapi.com",
-                audience: "yourapi.com",
+                issuer: "https://mahedee.net",
+                audience: "https://mahedee.net",
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials

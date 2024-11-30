@@ -16,8 +16,16 @@ namespace StoreCenter.Api
 
             builder.Services.AddControllers();
 
+            // Add services to the container.
+
+            var _key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key");
+            var _issuer = builder.Configuration["Jwt:Issuer"] ?? throw new ArgumentNullException("Jwt:Issuer");
+            var _audience = builder.Configuration["Jwt:Audience"] ?? throw new ArgumentNullException("Jwt:Audience");
+            var _expiryInMinutes = builder.Configuration["Jwt:ExpiryInMinutes"] ?? throw new ArgumentNullException("Jwt:ExpiryInMinutes");
+
+
             // Configure JWT authentication
-            var key = Encoding.UTF8.GetBytes("YourSecretKeyHere!123&KeepitSecret");
+            var key = Encoding.UTF8.GetBytes(_key);
             builder.Services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -30,8 +38,8 @@ namespace StoreCenter.Api
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = "yourapi.com",
-                    ValidAudience = "yourapi.com",
+                    ValidIssuer = _issuer,
+                    ValidAudience = _audience,
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
