@@ -29,28 +29,6 @@ namespace StoreCenter.Api.Controllers
                 return Unauthorized();
             }
 
-            /*
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Thisis@secreteKey&KeepitSecret&Dontdiscloseit"));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
-            {
-            new Claim(JwtRegisteredClaimNames.Sub, login.Username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
-            var token = new JwtSecurityToken(
-                issuer: "https://mahedee.net",
-                audience: "https://mahedee.net",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credentials
-            );
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            return Ok(new { Token = tokenHandler.WriteToken(token) });
-
-            */
             var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
             return Ok(token);
         }
