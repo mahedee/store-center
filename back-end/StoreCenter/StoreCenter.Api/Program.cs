@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StoreCenter.Application.Interfaces;
 using StoreCenter.Application.Services;
+using StoreCenter.Infrastructure.Extensions;
 using StoreCenter.Infrastructure.Interfaces;
 using StoreCenter.Infrastructure.Security;
 using System.Text;
@@ -29,25 +30,26 @@ namespace StoreCenter.Api
 
 
             // Configure JWT authentication
-            var key = Encoding.UTF8.GetBytes(_key);
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = _issuer,
-                    ValidAudience = _audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+            //var key = Encoding.UTF8.GetBytes(_key);
+            //builder.Services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = true,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = _issuer,
+            //        ValidAudience = _audience,
+            //        IssuerSigningKey = new SymmetricSecurityKey(key)
+            //    };
+            //});
 
+            builder.Services.AddJwtAuthentication(builder.Configuration);
             // Dependency injection with key
             builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             builder.Services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expiryInMinutes));

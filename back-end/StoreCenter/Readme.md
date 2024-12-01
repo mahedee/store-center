@@ -1,0 +1,4 @@
+- Revisite Token Generation
+- Revisite Jwt Extension
+- Clean up code and retest
+- Add details comments
