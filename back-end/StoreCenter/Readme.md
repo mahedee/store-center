@@ -1,4 +1,10 @@
-- Revisite Token Generation
-- Revisite Jwt Extension
+- Replace extenstion method.
 - Clean up code and retest
 - Add details comments
+- Use api versioning
+- Implement Refresh Token
+- Implement Permission based authorization
+- Implement User Creation/Registration using database
+- Implement User Login using database
+- Revisite Token Generation (done)
+- Revisite Jwt Authentication (done)
