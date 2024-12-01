@@ -1,13 +1,8 @@
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StoreCenter.Application.Extensions;
 using StoreCenter.Application.Interfaces;
 using StoreCenter.Application.Services;
 using StoreCenter.Infrastructure.Extensions;
-using StoreCenter.Infrastructure.Interfaces;
-using StoreCenter.Infrastructure.Security;
-using System.Text;
 
 namespace StoreCenter.Api
 {
@@ -21,39 +16,23 @@ namespace StoreCenter.Api
 
             builder.Services.AddControllers();
 
-            // Add services to the container.
-
+   
             var _key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key");
             var _issuer = builder.Configuration["Jwt:Issuer"] ?? throw new ArgumentNullException("Jwt:Issuer");
             var _audience = builder.Configuration["Jwt:Audience"] ?? throw new ArgumentNullException("Jwt:Audience");
             var _expiryInMinutes = builder.Configuration["Jwt:ExpiryInMinutes"] ?? throw new ArgumentNullException("Jwt:ExpiryInMinutes");
 
 
-            // Configure JWT authentication
-            //var key = Encoding.UTF8.GetBytes(_key);
-            //builder.Services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = true,
-            //        ValidateAudience = true,
-            //        ValidateLifetime = true,
-            //        ValidateIssuerSigningKey = true,
-            //        ValidIssuer = _issuer,
-            //        ValidAudience = _audience,
-            //        IssuerSigningKey = new SymmetricSecurityKey(key)
-            //    };
-            //});
 
-            builder.Services.AddJwtAuthentication(builder.Configuration);
-            // Dependency injection with key
-            builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
-            builder.Services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expiryInMinutes));
+            // Add Jwt Authentication
+            builder.Services.AddJwtAuthentication(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
 
+            // Add Dependency Injection for Application
+            builder.Services.AddApplication(builder.Configuration);
+
+            // Add Dependency Injection for Infrastructure
+            builder.Services.AddInfrastructure(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
+           
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 

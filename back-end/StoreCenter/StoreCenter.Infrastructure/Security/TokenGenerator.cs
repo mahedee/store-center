@@ -23,21 +23,33 @@ namespace StoreCenter.Infrastructure.Security
 
         public string GenerateJWTToken((string userId, string userName, IList<string> roles) userDetails)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+            var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-            var claims = new[]
+            // Deconstruct the tuple
+            // Deconstructing a tuple is a feature that allows you to break a tuple into its individual parts.
+            var (userId, userName, roles) = userDetails;
+
+            // Claims is a collection of key-value pairs that represent the subject of the token.
+            // Claims are used to store information about the user, such as the user's name, email, and roles.
+            var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userDetails.userName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Sub, userName), // Subject of the token. For example, the user's name.
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Unique identifier for the token. For example, a GUID.
+                new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()), // Time the token was issued.Iat means "issued at".
+                new Claim(ClaimTypes.NameIdentifier, userId), // Unique identifier for the user. For example, the user's ID.
+                new Claim(ClaimTypes.Name, userName) // Name of the user. For example, the user's Full name.
             };
+
+            // Add roles to the claims
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var token = new JwtSecurityToken(
                 issuer: _issuer,
                 audience: _audience,
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credentials
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_expiryMinutes)),
+                signingCredentials: signingCredentials
             );
 
             var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
