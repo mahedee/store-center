@@ -2,6 +2,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using StoreCenter.Application.Interfaces;
+using StoreCenter.Application.Services;
+using StoreCenter.Infrastructure.Interfaces;
+using StoreCenter.Infrastructure.Security;
 using System.Text;
 
 namespace StoreCenter.Api
@@ -43,6 +47,10 @@ namespace StoreCenter.Api
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
             });
+
+            // Dependency injection with key
+            builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+            builder.Services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expiryInMinutes));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

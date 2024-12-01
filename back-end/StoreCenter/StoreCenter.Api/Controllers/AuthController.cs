@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using StoreCenter.Application.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,6 +13,11 @@ namespace StoreCenter.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        ITokenGeneratorService _tokenGeneratorService;
+        public AuthController(ITokenGeneratorService tokenGenerator)
+        {
+            _tokenGeneratorService = tokenGenerator;
+        }
 
         // POST api/<AuthController>
         [HttpPost("login")]
@@ -23,6 +29,7 @@ namespace StoreCenter.Api.Controllers
                 return Unauthorized();
             }
 
+            /*
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Thisis@secreteKey&KeepitSecret&Dontdiscloseit"));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
@@ -42,6 +49,10 @@ namespace StoreCenter.Api.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             return Ok(new { Token = tokenHandler.WriteToken(token) });
+
+            */
+            var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
+            return Ok(token);
         }
 
         // PUT api/<AuthController>/5
