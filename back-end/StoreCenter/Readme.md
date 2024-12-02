@@ -1,10 +1,13 @@
-- Replace extenstion method.
-- Clean up code and retest
 - Add details comments
 - Use api versioning
 - Implement Refresh Token
 - Implement Permission based authorization
 - Implement User Creation/Registration using database
 - Implement User Login using database
+- Separate password table with salt and hash columns
+- Implement Reporting in this application
+- Implement Logging in this application
+- Add Seed data
 - Revisite Token Generation (done)
-- Revisite Jwt Authentication (done)
+- Revisite Jwt Authentication (done
+- Replace extenstion method. (done)
