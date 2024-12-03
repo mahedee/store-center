@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StoreCenter.Infrastructure.Data.Repositories;
 using StoreCenter.Infrastructure.Interfaces;
 using StoreCenter.Infrastructure.Security;
 using System;
@@ -17,6 +18,7 @@ namespace StoreCenter.Infrastructure.Extensions
 IConfiguration configuration, string _key, string _issuer, string _audience, string _expiryInMinutes)
         {
             services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expiryInMinutes));
+            services.AddScoped<IUserRepository, UserRepository>();
             return services;
         }
     }
