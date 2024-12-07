@@ -10,10 +10,9 @@ namespace StoreCenter.Infrastructure.Interfaces
     public interface ICategoryRepository
     {
         Task<IEnumerable<Category?>> GetCategories();
-        Task<Category?> GetCategory(int id);
+        Task<Category?> GetCategory(Guid id);
         Task AddCategory(Category category);
         Task<Category?> UpdateCategory(Category category);
-        Task DeleteCategory(int id);
-        Task SaveChangesAsync();
+        Task DeleteCategory(Guid id);
     }
 }

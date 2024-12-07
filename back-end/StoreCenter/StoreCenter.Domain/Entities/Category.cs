@@ -7,7 +7,7 @@
         public string Description { get; set; }
 
         // ? is used to make the property nullable
-        public ICollection<Product> Products { get; set; }
+        //public ICollection<Product> Products { get; set; }
     }
 
 }

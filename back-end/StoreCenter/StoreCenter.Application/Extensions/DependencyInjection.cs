@@ -12,6 +12,7 @@ IConfiguration configuration)
         {
            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
            services.AddScoped<IAuthService, AuthService>();
+           services.AddScoped<ICategoryService, CategoryService>();
             return services;
         }
     }

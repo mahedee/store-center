@@ -17,6 +17,7 @@
 - Create user with role assignment
 - Create a generic api response - Follow CHS API Response
 - Add details comments
+- Create a generic base class for domain models
 
 ## In Progress
 - CRUD operations on Category

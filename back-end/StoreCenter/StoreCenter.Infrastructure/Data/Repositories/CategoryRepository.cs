@@ -13,16 +13,17 @@ namespace StoreCenter.Infrastructure.Data.Repositories
         }
         public async Task AddCategory(Category category)
         { 
-           await _context.Categories.AddAsync(category);
+           _context.Categories.Add(category);
+           await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCategory(int id)
+        public async Task DeleteCategory(Guid id)
         {
             var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
                 _context.Categories.Remove(category);
-                //await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
             }
         }
 
@@ -31,19 +32,25 @@ namespace StoreCenter.Infrastructure.Data.Repositories
             return await _context.Categories.ToListAsync();
         }
 
-        public Task<Category?> GetCategory(int id)
+        public async Task<Category?> GetCategory(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Categories.FindAsync(id);
         }
-
-        public Task SaveChangesAsync()
+        public async Task<Category?> UpdateCategory(Category category)
         {
-            throw new NotImplementedException();
-        }
+            var existingCategory = await _context.Categories.FindAsync(category.Id);
+            if (existingCategory == null)
+            {
+                return null;
+            }
 
-        public Task<Category?> UpdateCategory(Category category)
-        {
-            throw new NotImplementedException();
+            existingCategory.Name = category.Name;
+            existingCategory.Description = category.Description;
+
+            _context.Categories.Update(existingCategory);
+            await _context.SaveChangesAsync();
+
+            return existingCategory;
         }
     }
 }
