@@ -9,10 +9,10 @@ namespace StoreCenter.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync();
+        Task<(bool Success, List<string> Errors, IEnumerable<Category?> Categories)> GetAllCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(Guid categoryId);
         Task<(bool Success, List<string> Errors)> AddCategoryAsync(Category category);
         Task UpdateCategoryAsync(Category category);
-        Task DeleteCategoryAsync(Guid categoryId);
+        Task<(bool Success, List<string> Errors)> DeleteCategoryAsync(Guid categoryId);
     }
 }

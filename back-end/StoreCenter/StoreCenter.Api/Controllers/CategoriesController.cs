@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
-using StoreCenter.Application.Dtos;
 using StoreCenter.Application.Interfaces;
-using StoreCenter.Application.Services;
 using StoreCenter.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,7 +11,8 @@ namespace StoreCenter.Api.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        public readonly ICategoryService _categoryService;
+        private readonly ICategoryService _categoryService;
+
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
@@ -21,24 +20,32 @@ namespace StoreCenter.Api.Controllers
 
         // GET: api/<CategoriesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _categoryService.GetAllCategoriesAsync();
+            if (!result.Success)
+            {
+                return ApiResponseHelper.ValidationError(result.Errors);
+            }
+            return ApiResponseHelper.Success(result.Categories, "Categories retrieved successfully");
         }
 
-        // GET api/<CategoriesController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        //// GET api/<CategoriesController>/5
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(Guid id)
+        //{
+        //    var category = await _categoryService.GetCategoryByIdAsync(id);
+        //    if (category == null)
+        //    {
+        //        return ApiResponseHelper.NotFound("Category not found");
+        //    }
+        //    return ApiResponseHelper.Success(category);
+        //}
 
         // POST api/<CategoriesController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Category category)
         {
-
-
             var result = await _categoryService.AddCategoryAsync(category);
 
             if (!result.Success)
@@ -49,16 +56,33 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(null, "Category created successfully");
         }
 
-        // PUT api/<CategoriesController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// PUT api/<CategoriesController>/5
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> Put(Guid id, [FromBody] Category category)
+        //{
+        //    var existingCategory = await _categoryService.GetCategoryByIdAsync(id);
+        //    if (existingCategory == null)
+        //    {
+        //        return ApiResponseHelper.NotFound("Category not found");
+        //    }
+
+        //    category.Id = id;
+        //    await _categoryService.UpdateCategoryAsync(category);
+        //    return ApiResponseHelper.Success(null, "Category updated successfully");
+        //}
 
         // DELETE api/<CategoriesController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            var existingCategory = await _categoryService.GetCategoryByIdAsync(id);
+            if (existingCategory == null)
+            {
+                return ApiResponseHelper.NotFound("Category not found");
+            }
+
+            await _categoryService.DeleteCategoryAsync(id);
+            return ApiResponseHelper.Success(null, "Category deleted successfully");
         }
     }
 }

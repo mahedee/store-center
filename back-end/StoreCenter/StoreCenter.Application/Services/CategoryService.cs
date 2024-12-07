@@ -28,14 +28,32 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        public async Task DeleteCategoryAsync(Guid categoryId)
+        public async Task<(bool Success, List<string> Errors)> DeleteCategoryAsync(Guid categoryId)
         {
-            await _categoryRepository.DeleteCategory(categoryId);
+            var errors = new List<string>();
+            try
+            {
+                await _categoryRepository.DeleteCategory(categoryId);
+                return (true, errors);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex.Message);
+                return (false, errors);
+            }
         }
 
-        public async Task<IEnumerable<Category?>> GetAllCategoriesAsync()
+        public async Task<(bool Success, List<string> Errors, IEnumerable<Category?> Categories)> GetAllCategoriesAsync()
         {
-            return await _categoryRepository.GetCategories();
+            try
+            {
+                var categories = await _categoryRepository.GetCategories();
+                return (true, new List<string>(), categories);
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<string> { ex.Message }, Enumerable.Empty<Category?>());
+            }
         }
 
         public Task<Category?> GetCategoryByIdAsync(Guid categoryId)
