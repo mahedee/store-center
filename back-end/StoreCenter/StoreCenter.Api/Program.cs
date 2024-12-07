@@ -1,8 +1,8 @@
 using Microsoft.OpenApi.Models;
 using StoreCenter.Application.Extensions;
-using StoreCenter.Application.Interfaces;
-using StoreCenter.Application.Services;
+using StoreCenter.Infrastructure.Data;
 using StoreCenter.Infrastructure.Extensions;
+using StoreCenter.Infrastructure.Seeders;
 
 namespace StoreCenter.Api
 {
@@ -16,7 +16,7 @@ namespace StoreCenter.Api
 
             builder.Services.AddControllers();
 
-   
+
             var _key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key");
             var _issuer = builder.Configuration["Jwt:Issuer"] ?? throw new ArgumentNullException("Jwt:Issuer");
             var _audience = builder.Configuration["Jwt:Audience"] ?? throw new ArgumentNullException("Jwt:Audience");
@@ -25,6 +25,10 @@ namespace StoreCenter.Api
 
             // Add DbContext
             builder.Services.AddDbContext(builder.Configuration);
+
+            // Add Seed Data
+            builder.Services.AddSeedData();
+
             // Add Jwt Authentication
             builder.Services.AddJwtAuthentication(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
 
@@ -33,7 +37,7 @@ namespace StoreCenter.Api
 
             // Add Dependency Injection for Infrastructure
             builder.Services.AddInfrastructure(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
-           
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
 
