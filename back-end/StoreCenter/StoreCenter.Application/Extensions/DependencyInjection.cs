@@ -11,6 +11,7 @@ namespace StoreCenter.Application.Extensions
 IConfiguration configuration)
         {
            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+           services.AddScoped<IAuthService, AuthService>();
             return services;
         }
     }

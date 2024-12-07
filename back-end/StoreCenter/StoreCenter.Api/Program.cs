@@ -23,7 +23,8 @@ namespace StoreCenter.Api
             var _expiryInMinutes = builder.Configuration["Jwt:ExpiryInMinutes"] ?? throw new ArgumentNullException("Jwt:ExpiryInMinutes");
 
 
-
+            // Add DbContext
+            builder.Services.AddDbContext(builder.Configuration);
             // Add Jwt Authentication
             builder.Services.AddJwtAuthentication(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
 
