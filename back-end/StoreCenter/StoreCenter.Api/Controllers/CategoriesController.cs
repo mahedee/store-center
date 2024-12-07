@@ -30,17 +30,17 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(result.Categories, "Categories retrieved successfully");
         }
 
-        //// GET api/<CategoriesController>/5
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> Get(Guid id)
-        //{
-        //    var category = await _categoryService.GetCategoryByIdAsync(id);
-        //    if (category == null)
-        //    {
-        //        return ApiResponseHelper.NotFound("Category not found");
-        //    }
-        //    return ApiResponseHelper.Success(category);
-        //}
+        // GET api/<CategoriesController>/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var result = await _categoryService.GetCategoryByIdAsync(id);
+            if (!result.Success || result.Category is null)
+            {
+                return ApiResponseHelper.NotFound("Category not found");
+            }
+            return ApiResponseHelper.Success(result.Category);
+        }
 
         // POST api/<CategoriesController>
         [HttpPost]
@@ -75,13 +75,18 @@ namespace StoreCenter.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var existingCategory = await _categoryService.GetCategoryByIdAsync(id);
-            if (existingCategory == null)
+            var result = await _categoryService.GetCategoryByIdAsync(id);
+            if (!result.Success || result.Category is null)
             {
                 return ApiResponseHelper.NotFound("Category not found");
             }
 
-            await _categoryService.DeleteCategoryAsync(id);
+            var deleteResult = await _categoryService.DeleteCategoryAsync(id);
+            if (!deleteResult.Success)
+            {
+                return ApiResponseHelper.ValidationError(deleteResult.Errors);
+            }
+
             return ApiResponseHelper.Success(null, "Category deleted successfully");
         }
     }

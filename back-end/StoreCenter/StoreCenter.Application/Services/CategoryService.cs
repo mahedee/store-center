@@ -1,7 +1,6 @@
 ﻿using StoreCenter.Application.Interfaces;
 using StoreCenter.Domain.Entities;
 using StoreCenter.Infrastructure.Interfaces;
-using System.Threading.Tasks;
 
 namespace StoreCenter.Application.Services
 {
@@ -56,9 +55,17 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        public Task<Category?> GetCategoryByIdAsync(Guid categoryId)
+        public async Task<(bool Success, List<string> Errors, Category? Category)> GetCategoryByIdAsync(Guid categoryId)
         {
-            return _categoryRepository.GetCategory(categoryId);
+            try
+            {
+                var category = await _categoryRepository.GetCategory(categoryId);
+                return (true, new List<string>(), category);
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<string> { ex.Message }, null);
+            }
         }
 
         public async Task UpdateCategoryAsync(Category category)
