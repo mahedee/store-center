@@ -1,5 +1,4 @@
 ## To Do
-- Add details comments
 - Use api versioning
 - Implement Refresh Token
 - Implement Permission based authorization
@@ -17,8 +16,11 @@
 - Implement Role based authorization
 - Create user with role assignment
 - Create a generic api response - Follow CHS API Response
+- Add details comments
 
 ## In Progress
+- CRUD operations on Category
+
 ## Done
 - Revisite Token Generation (done)
 - Revisite Jwt Authentication (done

@@ -19,6 +19,7 @@ IConfiguration configuration, string _key, string _issuer, string _audience, str
         {
             services.AddSingleton<ITokenGenerator>(new TokenGenerator(_key, _issuer, _audience, _expiryInMinutes));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             return services;
         }
     }
