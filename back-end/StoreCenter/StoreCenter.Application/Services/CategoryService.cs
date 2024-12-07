@@ -68,9 +68,19 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        public async Task UpdateCategoryAsync(Category category)
+        public async Task<(bool Success, List<string> Errors)> UpdateCategoryAsync(Category category)
         {
-            _categoryRepository.UpdateCategory(category);
+            var errors = new List<string>();
+            try
+            {
+                await _categoryRepository.UpdateCategory(category);
+                return (true, errors);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex.Message);
+                return (false, errors);
+            }
         }
     }
 }

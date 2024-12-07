@@ -56,20 +56,25 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(null, "Category created successfully");
         }
 
-        //// PUT api/<CategoriesController>/5
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> Put(Guid id, [FromBody] Category category)
-        //{
-        //    var existingCategory = await _categoryService.GetCategoryByIdAsync(id);
-        //    if (existingCategory == null)
-        //    {
-        //        return ApiResponseHelper.NotFound("Category not found");
-        //    }
+        // PUT api/<CategoriesController>/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] Category category)
+        {
+            if(id != category.Id)
+            {
+                return ApiResponseHelper.Error("Category ID mismatch");
+            }
 
-        //    category.Id = id;
-        //    await _categoryService.UpdateCategoryAsync(category);
-        //    return ApiResponseHelper.Success(null, "Category updated successfully");
-        //}
+            var result = await _categoryService.GetCategoryByIdAsync(id);
+            if (!result.Success || result.Category is null)
+            {
+                return ApiResponseHelper.NotFound("Category not found");
+            }
+
+            category.Id = id;
+            await _categoryService.UpdateCategoryAsync(category);
+            return ApiResponseHelper.Success(null, "Category updated successfully");
+        }
 
         // DELETE api/<CategoriesController>/5
         [HttpDelete("{id}")]
