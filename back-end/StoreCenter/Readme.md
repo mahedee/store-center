@@ -1,6 +1,5 @@
 ## To Do
 
-- Create roles
 - Create permissions
 - Assign permissions to roles
 - Assign roles to users
@@ -20,7 +19,7 @@
 - Implement api gateway
 
 ## In Progress
-
+- CRUD operations on roles
 
 ## Done
 - Revisite Token Generation (done)
@@ -29,3 +28,4 @@
 - Implement User Creation/Registration using database (done)
 - CRUD operations on Category (done)
 - Add Seed data for categories (done)
+- Name of the role should be unique (done)

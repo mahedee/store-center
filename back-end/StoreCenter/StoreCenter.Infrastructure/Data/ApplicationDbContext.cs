@@ -28,6 +28,11 @@ namespace StoreCenter.Infrastructure.Data
             //modelBuilder.Entity<RolePermission>().HasKey(rp => new { rp.RoleId, rp.PermissionId });
             base.OnModelCreating(modelBuilder);
 
+            // Configure unique constraint for Role name
+            modelBuilder.Entity<Role>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
+
             // Explicitly define composite primary key for RolePermission
             modelBuilder.Entity<RolePermission>()
                 .HasKey(rp => new { rp.RoleId, rp.PermissionId });
