@@ -16,6 +16,7 @@ namespace StoreCenter.Infrastructure.Seeders
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 context.SeedCategories();
+                context.SeedRoles();
             }
 
             return services;

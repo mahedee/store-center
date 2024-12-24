@@ -17,9 +17,10 @@
 - Implement Logging in this application
 - Add Pagination in the api 
 - Implement api gateway
+- Implement unit tests
 
 ## In Progress
-- CRUD operations on roles
+
 
 ## Done
 - Revisite Token Generation (done)
@@ -29,3 +30,4 @@
 - CRUD operations on Category (done)
 - Add Seed data for categories (done)
 - Name of the role should be unique (done)
+- CRUD operations on roles (done)

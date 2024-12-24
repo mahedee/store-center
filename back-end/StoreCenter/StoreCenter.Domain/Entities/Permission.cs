@@ -4,6 +4,6 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Role> Roles { get; set; } = new List<Role>();
+        public ICollection<Role>? Roles { get; set; }
     }
 }
