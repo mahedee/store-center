@@ -1,5 +1,4 @@
 ## To Do
-- Assign permissions to roles
 - Assign roles to users
 - Implement Role based authorization
 - Create user with role assignment
@@ -17,11 +16,13 @@
 - Implement api gateway
 - Implement unit tests
 - Use message properties file for messages. Replace hardcoded messages with message properties
+- Move all Dto class to Domain project
 
 ## In Progress
 
 
 ## Done
+- Assign permissions to roles - CRUD operations(done)
 - Revisite Token Generation (done)
 - Revisite Jwt Authentication (done
 - Replace extenstion method. (done)
