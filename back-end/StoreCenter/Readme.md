@@ -1,6 +1,4 @@
 ## To Do
-
-- Create permissions
 - Assign permissions to roles
 - Assign roles to users
 - Implement Role based authorization
@@ -18,6 +16,7 @@
 - Add Pagination in the api 
 - Implement api gateway
 - Implement unit tests
+- Use message properties file for messages. Replace hardcoded messages with message properties
 
 ## In Progress
 
@@ -31,3 +30,4 @@
 - Add Seed data for categories (done)
 - Name of the role should be unique (done)
 - CRUD operations on roles (done)
+- Perform CRUD operation on permissions

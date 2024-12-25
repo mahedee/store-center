@@ -19,10 +19,10 @@ namespace StoreCenter.Infrastructure.Data.Repositories
 
         public async Task DeletePermission(Guid id)
         {
-            var role = await _context.Roles.FindAsync(id);
-            if (role != null)
+            var permission = await _context.Permissions.FindAsync(id);
+            if (permission != null)
             {
-                _context.Roles.Remove(role);
+                _context.Permissions.Remove(permission);
                 await _context.SaveChangesAsync();
             }
         }
