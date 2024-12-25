@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
 using StoreCenter.Infrastructure.Interfaces;
 
@@ -43,12 +44,31 @@ namespace StoreCenter.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<RolePermission?>> GetRolePermissions()
+        public async Task<IEnumerable<RolePermissionDto?>> GetRolePermissions()
         {
+            //return await _context.RolePermissions
+            //                     .Include(rp => rp.Role)
+            //                     .Include(rp => rp.Permission)
+            //                     .ToListAsync();
+
+            //return await _context.RolePermissions
+            //    .Select(rp => new
+            //    {
+            //        RoleId = rp.Role.Id,
+            //        RoleName = rp.Role.Name,
+            //        PermissionId = rp.Permission.Id,
+            //        PermissionName = rp.Permission.Name
+            //    }).ToListAsync();
+
             return await _context.RolePermissions
-                                 .Include(rp => rp.Role)
-                                 .Include(rp => rp.Permission)
-                                 .ToListAsync();
+                .Select(rp => new RolePermissionDto
+                {
+                    RoleId = rp.Role.Id,
+                    RoleName = rp.Role.Name,
+                    PermissionId = rp.Permission.Id,
+                    PermissionName = rp.Permission.Name
+                })
+                .ToListAsync();
         }
 
         public async Task<RolePermission?> GetRolePermission(Guid roleId, Guid permissionId)

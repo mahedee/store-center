@@ -5,6 +5,7 @@ using StoreCenter.Application.Interfaces;
 using StoreCenter.Domain.Entities;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using StoreCenter.Domain.Dtos;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -54,18 +55,18 @@ namespace StoreCenter.Api.Controllers
         //}
 
         // POST api/<CategoriesController>
-        [HttpPost("AddRolePermission")]
-        public async Task<IActionResult> Post([FromBody] RolePermission rolePermission)
-        {
-            var result = await _rolePermissionService.AddRolePermissionAsync(rolePermission);
+        //[HttpPost("AddRolePermission")]
+        //public async Task<IActionResult> Post([FromBody] RolePermission rolePermission)
+        //{
+        //    var result = await _rolePermissionService.AddRolePermissionAsync(rolePermission);
 
-            if (!result.Success)
-            {
-                return ApiResponseHelper.ValidationError(result.Errors);
-            }
+        //    if (!result.Success)
+        //    {
+        //        return ApiResponseHelper.ValidationError(result.Errors);
+        //    }
 
-            return ApiResponseHelper.Success(null, "RolePermission created successfully");
-        }
+        //    return ApiResponseHelper.Success(null, "RolePermission created successfully");
+        //}
 
         [HttpPost("AssignRolePermission")]
         public async Task<IActionResult> AssignRolePermission([FromBody] RolePermissionDto rolePermissionDto)
@@ -101,7 +102,7 @@ namespace StoreCenter.Api.Controllers
         //}
 
         // DELETE api/<CategoriesController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{roleId}/{permissionId}")]
         public async Task<IActionResult> Delete(Guid roleId, Guid permissionId)
         {
             var result = await _rolePermissionService.GetRolePermissionByIdAsync(roleId, permissionId);

@@ -1,10 +1,11 @@
-﻿using StoreCenter.Domain.Entities;
+﻿using StoreCenter.Domain.Dtos;
+using StoreCenter.Domain.Entities;
 
 namespace StoreCenter.Infrastructure.Interfaces
 {
     public interface IRolePermissionRepository
     {
-        Task<IEnumerable<RolePermission?>> GetRolePermissions();
+        Task<IEnumerable<RolePermissionDto?>> GetRolePermissions();
         Task<RolePermission?> GetRolePermission(Guid roleId, Guid permissionId);
         Task AddRolePermission(RolePermission permission);
         Task AssignRolePermission(Guid roleId, Guid permissionId);

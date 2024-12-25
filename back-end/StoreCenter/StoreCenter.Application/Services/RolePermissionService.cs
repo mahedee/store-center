@@ -1,4 +1,5 @@
 ﻿using StoreCenter.Application.Interfaces;
+using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
 using StoreCenter.Infrastructure.Interfaces;
 
@@ -59,7 +60,7 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        public async Task<(bool Success, List<string> Errors, IEnumerable<RolePermission?> rolePermissions)> GetAllRolePermissionsAsync()
+        public async Task<(bool Success, List<string> Errors, IEnumerable<RolePermissionDto?> rolePermissions)> GetAllRolePermissionsAsync()
         {
             try
             {
@@ -69,7 +70,7 @@ namespace StoreCenter.Application.Services
             catch (Exception ex)
             {
                 // Enumerable.Empty<Role?>() returns an empty collection of Role objects
-                return (false, new List<string> { ex.Message }, Enumerable.Empty<RolePermission?>());
+                return (false, new List<string> { ex.Message }, Enumerable.Empty<RolePermissionDto?>());
             }
         }
 
