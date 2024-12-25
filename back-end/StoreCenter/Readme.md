@@ -1,4 +1,5 @@
 ## To Do
+- CRUD operation in User
 - Assign roles to users
 - Implement Role based authorization
 - Create user with role assignment

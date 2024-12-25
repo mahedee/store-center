@@ -8,7 +8,7 @@
         public string PasswordHash { get; set; }
 
         // Add this property to fix the error
-        public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserRole>? UserRoles { get; set; }
     }
 
 
