@@ -15,6 +15,7 @@ IConfiguration configuration)
            services.AddScoped<ICategoryService, CategoryService>();
            services.AddScoped<IRoleService, RoleService>();
            services.AddScoped<IPermissionService, PermissionService>();
+           services.AddScoped<IRolePermissionService, RolePermissionService>();
             return services;
         }
     }

@@ -7,11 +7,28 @@ namespace StoreCenter.Application.Services
     public class RolePermissionService : IRolePermissionService
     {
 
-        public readonly IRolePermissionRepository _rolePermissionRepository;
+        private readonly IRolePermissionRepository _rolePermissionRepository;
+        
         public RolePermissionService(IRolePermissionRepository rolePermissionRepository) 
         {
             _rolePermissionRepository = rolePermissionRepository;
         }
+
+        public async Task<(bool Success, List<string> Errors)> AssignRolePermissionAsync(Guid roleId, Guid permissionId)
+        {
+            var errors = new List<string>();
+            try
+            {
+                await _rolePermissionRepository.AssignRolePermission(roleId, permissionId);
+                return (true, errors);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex.Message);
+                return (false, errors);
+            }
+        }
+
         public async Task<(bool Success, List<string> Errors)> AddRolePermissionAsync(RolePermission rolePermission)
         {
             var errors = new List<string>();
@@ -56,18 +73,18 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        //public async Task<(bool Success, List<string> Errors, Permission? permission)>GetPermissionByIdAsync(Guid permissionId)
-        //{
-        //    try
-        //    {
-        //        var permission = await _permissionRepository.GetPermission(permissionId);
-        //        return (true, new List<string>(), permission);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, new List<string> { ex.Message }, null);
-        //    }
-        //}
+        public async Task<(bool Success, List<string> Errors, RolePermission? rolePermission)> GetRolePermissionByIdAsync(Guid roleId, Guid permissionId)
+        {
+            try
+            {
+                var permission = await _rolePermissionRepository.GetRolePermission(roleId, permissionId);
+                return (true, new List<string>(), permission);
+            }
+            catch (Exception ex)
+            {
+                return (false, new List<string> { ex.Message }, null);
+            }
+        }
 
         //public async Task<(bool Success, List<string> Errors)> UpdatePermissionAsync(Permission permission)
         //{
