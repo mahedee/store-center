@@ -33,3 +33,7 @@
 - Name of the role should be unique (done)
 - CRUD operations on roles (done)
 - Perform CRUD operation on permissions
+
+Note:
+User: hasan
+Pass: Test@1234
