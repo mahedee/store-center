@@ -21,7 +21,6 @@
 
 
 ## In Progress
-- Add authorization in RoleController
 	
 
 ## Done
@@ -37,6 +36,7 @@
 - Perform CRUD operation on permissions
 - CRUD operation in User
 - Login using database (done)
+- Add authorization in RoleController (done)
 
 Note:
 User: hasan
