@@ -12,6 +12,12 @@ IConfiguration configuration)
         {
            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
            services.AddScoped<IAuthService, AuthService>();
+           services.AddScoped<ICategoryService, CategoryService>();
+           services.AddScoped<IRoleService, RoleService>();
+           services.AddScoped<IPermissionService, PermissionService>();
+           services.AddScoped<IRolePermissionService, RolePermissionService>();
+           services.AddScoped<IUserRoleService, UserRoleService>();
+           services.AddScoped<IUserService, UserService>();
             return services;
         }
     }

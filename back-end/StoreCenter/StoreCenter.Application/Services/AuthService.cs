@@ -9,15 +9,36 @@ namespace StoreCenter.Application.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAuthenticationManager _authenticationManager;
+        private readonly ITokenGeneratorService _tokenGeneratorService;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository,
+            IAuthenticationManager authenticationManager,
+            ITokenGeneratorService tokenGeneratorService)
         {
             _userRepository = userRepository;
+            _authenticationManager = authenticationManager;
+            _tokenGeneratorService = tokenGeneratorService;
         }
 
-        public Task<string?> LoginAsync(LoginDto loginDto)
+        public async Task<string?> LoginAsync(LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            bool result = await _authenticationManager.SigninUserAsync(loginDto.UserName, PasswordHasher.HashPassword(loginDto.Password));
+
+            // If user is not authenticated return null
+            // To do: send proper response
+            if (!result)
+            {
+                return null;
+            }
+
+            // If user is authenticated, generate token
+            //var user = await _userRepository.GetUserByUserNameAsync(loginDto.UserName);
+            var userPermission = await _userRepository.GetUserPermissionAsync(loginDto.UserName);
+
+            string token = _tokenGeneratorService.GetJWTToken((userPermission.Id.ToString(), userPermission.UserName, userPermission.Email, userPermission.Roles.ToList(), userPermission.Permissions.ToList()));
+            //string token = _tokenGeneratorService.GetJWTToken((user.Id.ToString(), user.UserName, new List<string> { "User" }));
+            return token;
         }
 
         public async Task<(bool Success, List<string> Errors)> SignUpAsync(SignUpDto signUpDto)

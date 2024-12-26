@@ -19,9 +19,19 @@ namespace StoreCenter.Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure the precision and scale for the Price property of the Product entity
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasPrecision(18, 2); // Precision of 18 and scale of 2
+
             //modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId });
             //modelBuilder.Entity<RolePermission>().HasKey(rp => new { rp.RoleId, rp.PermissionId });
             base.OnModelCreating(modelBuilder);
+
+            // Configure unique constraint for Role name
+            modelBuilder.Entity<Role>()
+                .HasIndex(r => r.Name)
+                .IsUnique();
 
             // Explicitly define composite primary key for RolePermission
             modelBuilder.Entity<RolePermission>()

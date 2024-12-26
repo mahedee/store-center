@@ -50,5 +50,14 @@ namespace StoreCenter.Api.Helpers
                 Errors = errors
             });
         }
+
+        public static IActionResult NotFound(string message = "Record not found")
+        {
+            return new NotFoundObjectResult(new
+            {
+                Success = false,
+                Message = message
+            });
+        }
     }
 }

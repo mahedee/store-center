@@ -10,7 +10,7 @@ namespace StoreCenter.Application.Services
         {
             _tokenGenerator = tokenGenerator;
         }
-        public string GetJWTToken((string userId, string userName, IList<string> roles) userDetails)
+        public string GetJWTToken((string userId, string userName, string email, IList<string> roles, IList<string> permissions) userDetails)
         {
             return _tokenGenerator.GenerateJWTToken(userDetails);
         }
