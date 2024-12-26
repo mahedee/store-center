@@ -9,6 +9,8 @@ namespace StoreCenter.Infrastructure.Security
 {
     public class PermissionHandler : AuthorizationHandler<PermissionRequirement>
     {
+        // If you want to check the user's permission from the database instead of the claim
+        //, you can inject the IUserRepository here and use it to check the user's permission
         protected override Task HandleRequirementAsync(
             AuthorizationHandlerContext context,
             PermissionRequirement requirement)

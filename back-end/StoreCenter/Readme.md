@@ -19,8 +19,10 @@
 - Use message properties file for messages. Replace hardcoded messages with message properties
 - Move all Dto class to Domain project
 
+
 ## In Progress
-- Login using database
+- Add authorization in RoleController
+	
 
 ## Done
 - Assign permissions to roles - CRUD operations(done)
@@ -33,7 +35,8 @@
 - Name of the role should be unique (done)
 - CRUD operations on roles (done)
 - Perform CRUD operation on permissions
-- - CRUD operation in User
+- CRUD operation in User
+- Login using database (done)
 
 Note:
 User: hasan
