@@ -13,7 +13,9 @@ namespace StoreCenter.Infrastructure.Security
             AuthorizationHandlerContext context,
             PermissionRequirement requirement)
         {
-            var userPermissions = context.User.FindAll("Permission").Select(c => c.Value);
+            var userPermissions = context.User.Claims
+                .Where(c => c.Type == "Permission")
+                .Select(c => c.Value);
 
             if (userPermissions.Contains(requirement.Permission))
             {
@@ -22,6 +24,5 @@ namespace StoreCenter.Infrastructure.Security
 
             return Task.CompletedTask;
         }
-
     }
 }

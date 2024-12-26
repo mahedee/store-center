@@ -33,8 +33,11 @@ namespace StoreCenter.Application.Services
             }
 
             // If user is authenticated, generate token
-            var user = await _userRepository.GetUserByUserNameAsync(loginDto.UserName);
-            string token = _tokenGeneratorService.GetJWTToken((user.Id.ToString(), user.UserName, new List<string> { "User" }));
+            //var user = await _userRepository.GetUserByUserNameAsync(loginDto.UserName);
+            var userPermission = await _userRepository.GetUserPermissionAsync(loginDto.UserName);
+
+            string token = _tokenGeneratorService.GetJWTToken((userPermission.Id.ToString(), userPermission.UserName, userPermission.Email, userPermission.Roles.ToList(), userPermission.Permissions.ToList()));
+            //string token = _tokenGeneratorService.GetJWTToken((user.Id.ToString(), user.UserName, new List<string> { "User" }));
             return token;
         }
 

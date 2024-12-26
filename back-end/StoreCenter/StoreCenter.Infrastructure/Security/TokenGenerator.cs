@@ -21,14 +21,14 @@ namespace StoreCenter.Infrastructure.Security
             _expiryMinutes = expiryMinutes;
         }
 
-        public string GenerateJWTToken((string userId, string userName, IList<string> roles) userDetails)
+        public string GenerateJWTToken((string userId, string userName, string email, IList<string> roles, IList<string> permissions) userDetails)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // Deconstruct the tuple
             // Deconstructing a tuple is a feature that allows you to break a tuple into its individual parts.
-            var (userId, userName, roles) = userDetails;
+            var (userId, userName, email, roles, permissions) = userDetails;
 
             // Claims is a collection of key-value pairs that represent the subject of the token.
             // Claims are used to store information about the user, such as the user's name, email, and roles.
@@ -43,6 +43,9 @@ namespace StoreCenter.Infrastructure.Security
 
             // Add roles to the claims
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+            // Add permissions to the claims
+            claims.AddRange(permissions.Select(permission => new Claim("Permission", permission)));
 
             var token = new JwtSecurityToken(
                 issuer: _issuer,

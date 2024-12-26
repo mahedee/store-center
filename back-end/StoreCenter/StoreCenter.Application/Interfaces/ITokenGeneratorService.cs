@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StoreCenter.Application.Interfaces
+﻿namespace StoreCenter.Application.Interfaces
 {
     public interface ITokenGeneratorService
     {
-        public string GetJWTToken((string userId, string userName, IList<string> roles) userDetails);
+        public string GetJWTToken((string userId, string userName, string email, IList<string> roles, IList<string> permissions) userDetails);
     }
 }

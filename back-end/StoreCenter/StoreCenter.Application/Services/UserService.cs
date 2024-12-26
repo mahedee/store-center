@@ -89,6 +89,14 @@ namespace StoreCenter.Application.Services
         //        return (false, errors);
         //    }
         //}
+        public async Task<IEnumerable<string>> GetUsersPermission(string userName)
+        {
+            return await _userRepository.GetUsersPermission(userName);
+        }
 
+        public async Task<UserPermissionDto> GetUserPermissionAsync(string userName)
+        {
+            return await _userRepository.GetUserPermissionAsync(userName);
+        }
     }
 }

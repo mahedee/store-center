@@ -44,7 +44,7 @@ namespace StoreCenter.Api.Controllers
             //}
 
             //var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
-            var token = _authService.LoginAsync(login);
+            var token = await _authService.LoginAsync(login);
             return Ok(token);
         }
 
