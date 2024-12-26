@@ -35,15 +35,16 @@ namespace StoreCenter.Api.Controllers
 
         // POST api/<AuthController>
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel login)
+        public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-            // Dummy validation
-            if (login.Username != "user" || login.Password != "password")
-            {
-                return Unauthorized();
-            }
+            //// Dummy validation
+            //if (login.Username != "user" || login.Password != "password")
+            //{
+            //    return Unauthorized();
+            //}
 
-            var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
+            //var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
+            var token = _authService.LoginAsync(login);
             return Ok(token);
         }
 

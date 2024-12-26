@@ -24,6 +24,7 @@ IConfiguration configuration, string _key, string _issuer, string _audience, str
             services.AddScoped<IPermissionRepository, PermissionRepository>();
             services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             return services;
         }
     }

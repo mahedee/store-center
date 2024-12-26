@@ -35,7 +35,10 @@ namespace StoreCenter.Infrastructure.Data.Repositories
 
         public async Task<User?> GetUserByUserNameAsync(string userName)
         {
-            return await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync();
+            //return await _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
+            var user = _context.Users.FirstOrDefault(u => u.UserName == userName);
+            //return await _context.Users.Where(u => u.UserName == userName).FirstOrDefaultAsync();
+            return user;
         }
     }
 }

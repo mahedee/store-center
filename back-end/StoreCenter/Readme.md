@@ -1,5 +1,5 @@
 ## To Do
-- CRUD operation in User
+- Implement permission based authorization
 - Assign roles to users
 - Implement Role based authorization
 - Create user with role assignment
@@ -20,7 +20,7 @@
 - Move all Dto class to Domain project
 
 ## In Progress
-
+- Login using database
 
 ## Done
 - Assign permissions to roles - CRUD operations(done)
@@ -33,7 +33,11 @@
 - Name of the role should be unique (done)
 - CRUD operations on roles (done)
 - Perform CRUD operation on permissions
+- - CRUD operation in User
 
 Note:
 User: hasan
 Pass: Test@1234
+
+user: mahedee
+pass: Test@123

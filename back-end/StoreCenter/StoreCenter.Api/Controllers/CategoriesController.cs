@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
 using StoreCenter.Application.Interfaces;
 using StoreCenter.Domain.Entities;
@@ -9,6 +10,7 @@ namespace StoreCenter.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;

@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using StoreCenter.Api.Extensions;
 using StoreCenter.Application.Extensions;
 using StoreCenter.Infrastructure.Data;
 using StoreCenter.Infrastructure.Extensions;
@@ -21,6 +22,8 @@ namespace StoreCenter.Api
                     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
                     options.JsonSerializerOptions.WriteIndented = true;
                 });
+
+            builder.Services.AddPermissionBasedAuthorization();
 
 
             var _key = builder.Configuration["Jwt:Key"] ?? throw new ArgumentNullException("Jwt:Key");
