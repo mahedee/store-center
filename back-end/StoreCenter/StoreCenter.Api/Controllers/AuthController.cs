@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
 using StoreCenter.Application.Dtos;
 using StoreCenter.Application.Interfaces;
@@ -9,18 +10,21 @@ namespace StoreCenter.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize()]
     public class AuthController : ControllerBase
     {
-        ITokenGeneratorService _tokenGeneratorService;
+        //ITokenGeneratorService _tokenGeneratorService;
         IAuthService _authService;
-        public AuthController(ITokenGeneratorService tokenGenerator, IAuthService authService)
+        public AuthController(IAuthService authService)
         {
-            _tokenGeneratorService = tokenGenerator;
+            //_tokenGeneratorService = tokenGenerator;
             _authService = authService;
         }
 
         [HttpPost("signup")]
         [ProducesDefaultResponseType(typeof(SignUpDto))]
+        [AllowAnonymous]
+
         public async Task<IActionResult> SignUp([FromBody] SignUpDto signUpDto)
         {
             var result = await _authService.SignUpAsync(signUpDto);
@@ -35,15 +39,9 @@ namespace StoreCenter.Api.Controllers
 
         // POST api/<AuthController>
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-            //// Dummy validation
-            //if (login.Username != "user" || login.Password != "password")
-            //{
-            //    return Unauthorized();
-            //}
-
-            //var token = _tokenGeneratorService.GetJWTToken((login.Username, login.Username, new List<string> { "User" }));
             var token = await _authService.LoginAsync(login);
             return Ok(token);
         }
@@ -52,9 +50,9 @@ namespace StoreCenter.Api.Controllers
 
     }
 
-    public class LoginModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
+    //public class LoginModel
+    //{
+    //    public string Username { get; set; }
+    //    public string Password { get; set; }
+    //}
 }

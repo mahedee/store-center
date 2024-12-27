@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace StoreCenter.Domain.Const
 {
-    public static class Permissions
+    public static class ActionPermissions
     {
+        // For Roles Controller
+        public const string RolesViewAll = "Roles:ViewAll";
+        public const string RolesViewById = "Roles:ViewById";
+        public const string RolesCreate = "Roles:Create";
+        public const string RolesUpdate = "Roles:Update";
+        public const string RolesDelete = "Roles:Delete";
+
         public const string ViewReports = "ViewReports";
         public const string EditProfile = "EditProfile";
         public const string ManageUsers = "ManageUsers";

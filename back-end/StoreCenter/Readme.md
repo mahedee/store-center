@@ -1,11 +1,6 @@
 ## To Do
-- Implement permission based authorization
-- Assign roles to users
-- Implement Role based authorization
-- Create user with role assignment
-- Create a generic api response - Follow CHS API Response
-- Add details comments
-- Create a generic base class for domain models
+
+- Create a generic base class for domain models (follow AMSL)
 - Use api versioning
 - Implement Refresh Token
 - Implement Permission based authorization
@@ -18,9 +13,15 @@
 - Implement unit tests
 - Use message properties file for messages. Replace hardcoded messages with message properties
 - Move all Dto class to Domain project
+- Clean up the code - create a new branch and clean up the code - take one one class, remove unnecessary class and files
+- Create user with role assignment
+- Create a generic api response - Follow CHS API Response
+- Add details comments
+- CRUD operation for supplier
+
 
 ## In Progress
-- Login using database
+	
 
 ## Done
 - Assign permissions to roles - CRUD operations(done)
@@ -33,7 +34,13 @@
 - Name of the role should be unique (done)
 - CRUD operations on roles (done)
 - Perform CRUD operation on permissions
-- - CRUD operation in User
+- CRUD operation in User
+- Login using database (done)
+- Add authorization in RoleController (done)
+- Implement permission based authorization (done)
+- Assign roles to users (done)
+- Implement Role based authorization (done)
+
 
 Note:
 User: hasan

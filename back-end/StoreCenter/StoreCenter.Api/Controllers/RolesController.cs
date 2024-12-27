@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
 using StoreCenter.Application.Interfaces;
+using StoreCenter.Domain.Const;
 using StoreCenter.Domain.Entities;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace StoreCenter.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RolesController : ControllerBase
     {
         private readonly IRoleService _roleService;
@@ -18,7 +19,7 @@ namespace StoreCenter.Api.Controllers
             _roleService = roleService;
         }
 
-        // GET: api/<CategoriesController>
+        [Permission(ActionPermissions.RolesViewAll)]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -30,7 +31,8 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(result.roles, "Roles retrieved successfully");
         }
 
-        // GET api/<CategoriesController>/5
+
+        [Permission(ActionPermissions.RolesViewById)]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
@@ -42,7 +44,7 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(result.role);
         }
 
-        // POST api/<CategoriesController>
+        [Permission(ActionPermissions.RolesCreate)]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Role role)
         {
@@ -56,7 +58,7 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(null, "Role created successfully");
         }
 
-        // PUT api/<CategoriesController>/5
+        [Permission(ActionPermissions.RolesUpdate)]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] Role role)
         {
@@ -76,7 +78,7 @@ namespace StoreCenter.Api.Controllers
             return ApiResponseHelper.Success(null, "Role updated successfully");
         }
 
-        // DELETE api/<CategoriesController>/5
+        [Permission(ActionPermissions.RolesDelete)]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

@@ -14,7 +14,7 @@ namespace StoreCenter.Api.Controllers
     public class TestController : ControllerBase
     {
         // GET: api/<TestController>
-        [Permission(Permissions.ViewReports)]
+        [Permission(ActionPermissions.ViewReports)]
         [HttpGet("View Report")]
         public IActionResult ViewReports()
         {
