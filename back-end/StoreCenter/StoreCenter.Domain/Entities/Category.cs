@@ -1,8 +1,10 @@
-﻿namespace StoreCenter.Domain.Entities
+﻿using StoreCenter.Domain.Entities.Base;
+
+namespace StoreCenter.Domain.Entities
 {
-    public class Category
+    public class Category : BaseEntity<Guid>
     {
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
         public required string Name { get; set; }
         public string Description { get; set; }
 

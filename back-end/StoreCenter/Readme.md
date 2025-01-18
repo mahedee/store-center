@@ -16,8 +16,10 @@
 - Clean up the code - create a new branch and clean up the code - take one one class, remove unnecessary class and files
 - Create user with role assignment
 - Create a generic api response - Follow CHS API Response
-- Add details comments
+- Add details comments on each method
 - CRUD operation for supplier
+- Create a front end application using Angular
+- Clean up green code from back end application
 
 
 ## In Progress
