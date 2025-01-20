@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StoreCenter.Domain.Entities.Base;
 
 namespace StoreCenter.Domain.Entities
 {
     // Transaction Entity
-    public class Transaction
+    public class Transaction : BaseEntity<Guid>
     {
-        public int TransactionId { get; set; }
         public int ItemId { get; set; }
         public Product product { get; set; }
         public int UserId { get; set; }

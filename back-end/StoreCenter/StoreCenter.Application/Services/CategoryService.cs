@@ -1,4 +1,5 @@
 ﻿using StoreCenter.Application.Interfaces;
+using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
 using StoreCenter.Infrastructure.Interfaces;
 
@@ -42,16 +43,29 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        public async Task<(bool Success, List<string> Errors, IEnumerable<Category?> Categories)> GetAllCategoriesAsync()
+        //public async Task<(bool Success, List<string> Errors, IEnumerable<Category?> Categories)> GetAllCategoriesAsync()
+        //{
+        //    try
+        //    {
+        //        var categories = await _categoryRepository.GetCategories();
+        //        return (true, new List<string>(), categories);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return (false, new List<string> { ex.Message }, Enumerable.Empty<Category?>());
+        //    }
+        //}
+
+        public async Task<PaginatedResultDto<Category>> GetAllCategoriesAsync(QueryParametersDto queryParametersDto)
         {
             try
             {
-                var categories = await _categoryRepository.GetCategories();
-                return (true, new List<string>(), categories);
+                var (Categories, Count) = await _categoryRepository.GetCategories(queryParametersDto);
+                return new PaginatedResultDto<Category>(queryParametersDto.PageNumber, queryParametersDto.PageSize, Count, true, new List<string>(), Categories);
             }
             catch (Exception ex)
             {
-                return (false, new List<string> { ex.Message }, Enumerable.Empty<Category?>());
+                return new PaginatedResultDto<Category>(queryParametersDto.PageNumber, queryParametersDto.PageSize, 0, false, new List<string> { ex.Message }, null);
             }
         }
 

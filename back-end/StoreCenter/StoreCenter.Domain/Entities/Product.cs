@@ -1,11 +1,11 @@
-﻿using System.Transactions;
+﻿using StoreCenter.Domain.Entities.Base;
 
 namespace StoreCenter.Domain.Entities
 {
     // Inventory Item
-    public class Product
+    public class Product : BaseEntity<Guid>
     {
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
 
         // required keyword is used to make the property non-nullable
         public required string Name { get; set; }

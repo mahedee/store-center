@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
 using StoreCenter.Infrastructure.Interfaces;
 
@@ -27,9 +28,26 @@ namespace StoreCenter.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<Category?>> GetCategories()
+        //public async Task<IEnumerable<Category?>> GetCategories()
+        //{
+        //    return await _context.Categories.ToListAsync();
+        //}
+
+
+        public async Task<(IEnumerable<Category?> Categories, int Count)> GetCategories(QueryParametersDto queryParametersDto)
         {
-            return await _context.Categories.ToListAsync();
+            int pageSize = queryParametersDto.PageSize;
+            int pageNumber = queryParametersDto.PageNumber;
+            int offset = (pageNumber - 1) * pageSize;
+
+            // Note: you can add search term and order by using AsQueryable() and Where() methods
+
+            var totalRecords = await _context.Categories.CountAsync();
+            var categories = await _context.Categories
+                                           .Skip(offset)
+                                           .Take(pageSize)
+                                           .ToListAsync();
+            return (categories, totalRecords);
         }
 
         public async Task<Category?> GetCategory(Guid id)

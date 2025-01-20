@@ -1,6 +1,5 @@
 ## To Do
-
-- Create a generic base class for domain models (follow AMSL)
+- Add Pagination in the api (Added in Category controller. Refactor and apply on others. Follow ANG Location.API -> CountryController)
 - Use api versioning
 - Implement Refresh Token
 - Implement Permission based authorization
@@ -8,7 +7,6 @@
 - Separate password table with salt and hash columns
 - Implement Reporting in this application
 - Implement Logging in this application
-- Add Pagination in the api 
 - Implement api gateway
 - Implement unit tests
 - Use message properties file for messages. Replace hardcoded messages with message properties
@@ -16,9 +14,11 @@
 - Clean up the code - create a new branch and clean up the code - take one one class, remove unnecessary class and files
 - Create user with role assignment
 - Create a generic api response - Follow CHS API Response
-- Add details comments
+- Add details comments on each method
 - CRUD operation for supplier
-
+- Create a front end application using Angular
+- Clean up green code from back end application
+- Move all Dto class from application project to domain project
 
 ## In Progress
 	
@@ -40,6 +40,7 @@
 - Implement permission based authorization (done)
 - Assign roles to users (done)
 - Implement Role based authorization (done)
+- Create a generic base class for domain models (follow AMSL)
 
 
 Note:

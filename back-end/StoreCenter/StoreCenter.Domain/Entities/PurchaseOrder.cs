@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using StoreCenter.Domain.Entities.Base;
 
 namespace StoreCenter.Domain.Entities
 {
     // PurchaseOrder Entity
-    public class PurchaseOrder
+    public class PurchaseOrder : BaseEntity<Guid>
     {
-        public int PurchaseOrderId { get; set; }
         public int SupplierId { get; set; }
         public Supplier Supplier { get; set; }
         public DateTime OrderDate { get; set; }
