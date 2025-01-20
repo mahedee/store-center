@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
 using StoreCenter.Application.Interfaces;
+using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,15 +22,27 @@ namespace StoreCenter.Api.Controllers
         }
 
         // GET: api/<CategoriesController>
+        //[HttpGet]
+        //public async Task<IActionResult> Get()
+        //{
+        //    var result = await _categoryService.GetAllCategoriesAsync();
+        //    if (!result.Success)
+        //    {
+        //        return ApiResponseHelper.ValidationError(result.Errors);
+        //    }
+        //    return ApiResponseHelper.Success(result.Categories, "Categories retrieved successfully");
+        //}
+
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] QueryParametersDto queryParametersDto)
         {
-            var result = await _categoryService.GetAllCategoriesAsync();
-            if (!result.Success)
+            var result = await _categoryService.GetAllCategoriesAsync(queryParametersDto);
+            if(!result.Success)
             {
                 return ApiResponseHelper.ValidationError(result.Errors);
             }
-            return ApiResponseHelper.Success(result.Categories, "Categories retrieved successfully");
+            return Ok(result);
+            //return ApiResponseHelper.Success(result, "Categories retrieved successfully");
         }
 
         // GET api/<CategoriesController>/5
