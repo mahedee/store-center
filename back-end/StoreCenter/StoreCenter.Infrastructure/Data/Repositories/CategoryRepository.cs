@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StoreCenter.Domain.Dtos;
 using StoreCenter.Domain.Entities;
+using StoreCenter.Infrastructure.Extensions;
 using StoreCenter.Infrastructure.Interfaces;
 
 namespace StoreCenter.Infrastructure.Data.Repositories
@@ -28,26 +29,30 @@ namespace StoreCenter.Infrastructure.Data.Repositories
             }
         }
 
-        //public async Task<IEnumerable<Category?>> GetCategories()
-        //{
-        //    return await _context.Categories.ToListAsync();
-        //}
 
-
-        public async Task<(IEnumerable<Category?> Categories, int Count)> GetCategories(QueryParametersDto queryParametersDto)
+        // Refactored method to handle pagination, filtering, and sorting
+        public async Task<PaginatedResultDto<Category>> GetCategories(PaginationOptions paginationOptions)
         {
-            int pageSize = queryParametersDto.PageSize;
-            int pageNumber = queryParametersDto.PageNumber;
-            int offset = (pageNumber - 1) * pageSize;
+            IQueryable<Category> query = _context.Categories;
 
-            // Note: you can add search term and order by using AsQueryable() and Where() methods
+            // Apply pagination, sorting, and search logic using the extension method
+            query = query.ApplyPagination(paginationOptions);
 
-            var totalRecords = await _context.Categories.CountAsync();
-            var categories = await _context.Categories
-                                           .Skip(offset)
-                                           .Take(pageSize)
-                                           .ToListAsync();
-            return (categories, totalRecords);
+            // Get the total count after filtering and pagination
+            int totalCount = await query.CountAsync();
+
+            // Get the result set (categories after applying pagination)
+            var categories = await query.ToListAsync();
+
+            // Return PaginatedResultDto containing the paginated data
+            return new PaginatedResultDto<Category>(
+                paginationOptions.PageNumber,
+                paginationOptions.PageSize,
+                totalCount,
+                true,
+                new List<string>(),  // Errors, if any
+                categories
+            );
         }
 
         public async Task<Category?> GetCategory(Guid id)

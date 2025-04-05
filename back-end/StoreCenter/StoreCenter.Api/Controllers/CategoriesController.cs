@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StoreCenter.Api.Helpers;
 using StoreCenter.Application.Interfaces;
 using StoreCenter.Domain.Dtos;
@@ -11,7 +10,7 @@ namespace StoreCenter.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
@@ -21,29 +20,23 @@ namespace StoreCenter.Api.Controllers
             _categoryService = categoryService;
         }
 
-        // GET: api/<CategoriesController>
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var result = await _categoryService.GetAllCategoriesAsync();
-        //    if (!result.Success)
-        //    {
-        //        return ApiResponseHelper.ValidationError(result.Errors);
-        //    }
-        //    return ApiResponseHelper.Success(result.Categories, "Categories retrieved successfully");
-        //}
-
+        // Example: api/Categories?PageNumber=1&PageSize=100&SearchTerm=Books&SearchField=Name&OrderBy=Name&IsDescending=false
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] QueryParametersDto queryParametersDto)
+        public async Task<IActionResult> Get([FromQuery] PaginationOptions paginationOptions)
         {
-            var result = await _categoryService.GetAllCategoriesAsync(queryParametersDto);
-            if(!result.Success)
+            // Call the service to get the paginated categories
+            var result = await _categoryService.GetAllCategoriesAsync(paginationOptions);
+
+            // If the result is not successful, return an error response
+            if (!result.Success)
             {
-                return ApiResponseHelper.ValidationError(result.Errors);
+                return ApiResponseHelper.ValidationError(result.Errors); // Custom validation error handling
             }
+
+            // Return the result wrapped in a success response
             return Ok(result);
-            //return ApiResponseHelper.Success(result, "Categories retrieved successfully");
         }
+
 
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
