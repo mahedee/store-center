@@ -43,30 +43,10 @@ namespace StoreCenter.Application.Services
             }
         }
 
-        //public async Task<(bool Success, List<string> Errors, IEnumerable<Category?> Categories)> GetAllCategoriesAsync()
-        //{
-        //    try
-        //    {
-        //        var categories = await _categoryRepository.GetCategories();
-        //        return (true, new List<string>(), categories);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return (false, new List<string> { ex.Message }, Enumerable.Empty<Category?>());
-        //    }
-        //}
-
-        public async Task<PaginatedResultDto<Category>> GetAllCategoriesAsync(QueryParametersDto queryParametersDto)
+        public async Task<PaginatedResultDto<Category>> GetAllCategoriesAsync(PaginationOptions paginationOptions)
         {
-            try
-            {
-                var (Categories, Count) = await _categoryRepository.GetCategories(queryParametersDto);
-                return new PaginatedResultDto<Category>(queryParametersDto.PageNumber, queryParametersDto.PageSize, Count, true, new List<string>(), Categories);
-            }
-            catch (Exception ex)
-            {
-                return new PaginatedResultDto<Category>(queryParametersDto.PageNumber, queryParametersDto.PageSize, 0, false, new List<string> { ex.Message }, null);
-            }
+            // Call the repository to get paginated categories
+            return await _categoryRepository.GetCategories(paginationOptions);
         }
 
         public async Task<(bool Success, List<string> Errors, Category? Category)> GetCategoryByIdAsync(Guid categoryId)

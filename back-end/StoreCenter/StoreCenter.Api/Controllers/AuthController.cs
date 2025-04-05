@@ -49,10 +49,4 @@ namespace StoreCenter.Api.Controllers
         // PUT api/<AuthController>/5
 
     }
-
-    //public class LoginModel
-    //{
-    //    public string Username { get; set; }
-    //    public string Password { get; set; }
-    //}
 }

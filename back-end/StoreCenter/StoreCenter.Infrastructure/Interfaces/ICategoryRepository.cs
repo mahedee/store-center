@@ -10,8 +10,7 @@ namespace StoreCenter.Infrastructure.Interfaces
 {
     public interface ICategoryRepository
     {
-        //Task<IEnumerable<Category?>> GetCategories();
-        Task<(IEnumerable<Category?> Categories, int Count)> GetCategories(QueryParametersDto queryParametersDto);
+        Task<PaginatedResultDto<Category>> GetCategories(PaginationOptions paginationOptions);
         Task<Category?> GetCategory(Guid id);
         Task AddCategory(Category category);
         Task<Category?> UpdateCategory(Category category);
