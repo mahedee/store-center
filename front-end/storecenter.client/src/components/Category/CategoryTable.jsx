@@ -8,7 +8,7 @@ export default function CategoryTable({ categories }) {
   return (
     <div className="mt-4">
       <button
-        onClick={() => router.push("/categories/create")}
+        onClick={() => router.push("/settings/categories/create")}
         className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
       >
         Create New Category

@@ -41,6 +41,9 @@ namespace StoreCenter.Api
             // Add Jwt Authentication
             builder.Services.AddJwtAuthentication(builder.Configuration, _key, _issuer, _audience, _expiryInMinutes);
 
+            // Add CORS policy
+            builder.Services.AddCorsPolicy();
+
             // Add Dependency Injection for Application
             builder.Services.AddApplication(builder.Configuration);
 
@@ -79,6 +82,9 @@ namespace StoreCenter.Api
             });
 
             var app = builder.Build();
+
+            // Use CORS
+            app.UseCors("AllowFrontend");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

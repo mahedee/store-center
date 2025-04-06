@@ -34,3 +34,44 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## Recommended Folder Structure
+
+```bash
+/src
+├── /app                    → App Router pages and layouts
+│   ├── /dashboard
+│   │   ├── /page.jsx       → Route handler
+│   │   └── /layout.jsx     → Optional layout for this route
+│   ├── /settings
+│   │   └── /categories
+│   │       ├── page.jsx
+│   │       ├── CreateCategoryForm.jsx
+│   │       └── EditCategoryForm.jsx
+│   └── layout.js           → Root layout
+├── /components             → Reusable UI components
+│   ├── Sidebar.jsx
+│   ├── Table.jsx
+│   └── Button.jsx
+├── /features               → Domain-driven folder for each feature/module
+│   └── /category
+│       ├── CategoryList.jsx
+│       ├── CreateCategory.jsx
+│       ├── EditCategory.jsx
+│       └── index.js        → Barrel export (optional)
+├── /services               → API calls, all centralized
+│   ├── api.js              → Axios instance with base URL, interceptors
+│   └── categoryService.js  → All category-related API calls
+├── /hooks                  → Reusable custom hooks (e.g. useFetch, useCategory)
+├── /lib                    → Utility functions, helpers, constants
+│   ├── utils.js
+│   └── constants.js
+├── /store                  → (Optional) Redux, Zustand, or context store
+├── /styles
+│   ├── globals.css
+│   └── tailwind.config.js
+├── /types                  → TypeScript interfaces/types (if using TS)
+└── /assets                 → Images, fonts, icons, etc.
+
+```
