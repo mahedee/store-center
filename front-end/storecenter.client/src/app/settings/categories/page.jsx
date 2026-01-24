@@ -13,11 +13,26 @@ export default function CategoryPage() {
   useEffect(() => {
     const loadCategories = async () => {
       try {
+        console.log('Attempting to fetch categories...');
         const response = await fetchCategories(1, 10, "Name");
         setCategories(response?.data?.results || []);
       } catch (err) {
-        setError("Failed to load categories. Please ensure the backend server is running.");
-        console.error("Error fetching categories:", err);
+        console.error("Detailed error:", err);
+        let errorMessage = "Failed to load categories. ";
+        
+        if (err.code === 'NETWORK_ERROR' || err.message === 'Network Error') {
+          errorMessage += "Backend server appears to be unreachable. Please check if the API server is running on http://localhost:5100";
+        } else if (err.response?.status === 404) {
+          errorMessage += "API endpoint not found. Check if the Categories endpoint exists.";
+        } else if (err.response?.status >= 500) {
+          errorMessage += "Server error occurred.";
+        } else if (err.name === 'TypeError' && err.message.includes('Failed to fetch')) {
+          errorMessage += "CORS error or server not responding. Check backend CORS configuration.";
+        } else {
+          errorMessage += `Error: ${err.message}`;
+        }
+        
+        setError(errorMessage);
       } finally {
         setLoading(false);
       }
