@@ -57,10 +57,10 @@ Follow these steps to set up StockCenter on your local machine:
    cd backend/StoreCenter/StoreCenter.Application
    dotnet restore
    
-   cd backend/StoreCenter/StoreCenter.Application
+   cd backend/StoreCenter/StoreCenter.Domain
    dotnet restore
 
-   cd backend/StoreCenter/StoreCenter.Domain
+   cd backend/StoreCenter/StoreCenter.StoreCenter.Infrastructure
    dotnet restore
 
    ```
@@ -94,8 +94,17 @@ Follow these steps to set up StockCenter on your local machine:
 
 * Start the backend server:
    ```bash
+   cd backend/StoreCenter/StoreCenter.API
    dotnet run
    ```
+
+   Alternatively, to run with HTTPS profile:
+
+   ```bash
+   cd backend/StoreCenter/StoreCenter.API
+   dotnet run --launch-profile https
+   ```
+  You can access the application using swagger UI at `https://localhost:5001/swagger/index.html` or `http://localhost:5100/swagger/index.html` depending on your launch profile.
 
 * Configure the frontend application:
    - Update the `apiUrl` in `src/config.js` with the backend URL.
