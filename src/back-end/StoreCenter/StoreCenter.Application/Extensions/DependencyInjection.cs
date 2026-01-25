@@ -10,6 +10,9 @@ namespace StoreCenter.Application.Extensions
         public static IServiceCollection AddApplication(this IServiceCollection services,
 IConfiguration configuration)
         {
+           // Add AutoMapper
+           services.AddAutoMapper(typeof(DependencyInjection).Assembly);
+           
            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
            services.AddScoped<IAuthService, AuthService>();
            services.AddScoped<ICategoryService, CategoryService>();
@@ -18,6 +21,7 @@ IConfiguration configuration)
            services.AddScoped<IRolePermissionService, RolePermissionService>();
            services.AddScoped<IUserRoleService, UserRoleService>();
            services.AddScoped<IUserService, UserService>();
+           services.AddScoped<IBrandService, BrandService>();
             return services;
         }
     }

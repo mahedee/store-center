@@ -15,8 +15,9 @@ namespace StoreCenter.Infrastructure.Seeders
             using (var serviceScope = services.BuildServiceProvider().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-                context.SeedCategories();
-                context.SeedRoles();
+                context?.SeedCategories();
+                context?.SeedRoles();
+                context?.SeedBrands();
             }
 
             return services;
