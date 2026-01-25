@@ -130,22 +130,41 @@ After setting up, log in to the application using the following credentials:
 
 Start managing your inventory. Refer to the documentation (link if applicable) for detailed usage instructions.
 
-## Contributing
-We welcome contributions! To contribute:
-1. Fork the repository.
-2. Create a feature branch:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:
-   ```bash
-   git commit -m "Add your message here"
-   ```
-4. Push to your branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Open a pull request on GitHub.
+## 🤝 **Contributing**
+
+We welcome contributions from developers of all skill levels! Whether you're fixing bugs, adding features, improving documentation, or sharing ideas, your contribution matters.
+
+### **🎯 How to Contribute**
+
+#### **🐛 Report Issues**
+Found a bug or have a suggestion? Please check existing issues first, then:
+- **[🐞 Report a Bug](https://github.com/mahedee/store-center/issues/new?template=bug_report.md)**
+- **[💡 Request a Feature](https://github.com/mahedee/store-center/issues/new?template=feature_request.md)**
+- **[📝 Improve Documentation](https://github.com/mahedee/store-center/issues/new?template=documentation_improvement.md)**
+- **[❓ Ask a Question](https://github.com/mahedee/store-center/issues/new?template=general_issue.md)**
+
+#### **🔧 Code Contributions**
+1. **Fork the repository** and create your feature branch
+2. **[Follow this document to know how to contribute](CONTRIBUTING.md)**
+3. **Write tests** for your changes
+4. **Submit a pull request** following our [PR Guidelines](pullrequest-guidelines.md)
+
+
+### **🏆 Contributors**
+
+Thanks to all the amazing people who have contributed to this project!
+
+<!-- Contributors will be added here automatically -->
+<a href="https://github.com/mahedee/store-center/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=mahedee/store-center" />
+</a>
+
+### **🎖️ Recognition**
+
+We believe in recognizing contributors:
+- **🥇 Top Contributors**: Featured in README and social media
+- **🏆 Monthly Recognition**: Special mentions in project updates
+- **📜 Contributor Certificate**: Digital certificates for significant contributions
 
 ## License
 This project is licensed under the MIT License. See `LICENSE` for details.
