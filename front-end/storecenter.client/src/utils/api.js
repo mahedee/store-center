@@ -1,3 +1,6 @@
+// Legacy API utilities - use utils/api/services instead
+// This file is kept for backward compatibility but should be replaced
+
 // const API_URL = 'http://your-api-url'; // Replace with your actual API URL
 
 // export async function getCategories() {
@@ -20,9 +23,10 @@
 // }
 
 
+// DEPRECATED - Use categoryService.getCategories() instead
 export async function fetchCategories(pageNumber = 1, pageSize = 10, orderBy = "Name") {
     const res = await fetch(
-      `http://localhost:5100/api/Categories?PageNumber=${pageNumber}&PageSize=${pageSize}&OrderBy=${orderBy}`,
+      `https://localhost:5001/api/Categories?PageNumber=${pageNumber}&PageSize=${pageSize}&OrderBy=${orderBy}`,
       { cache: "no-store" } // prevent caching for SSR
     );
     if (!res.ok) throw new Error("Failed to fetch categories");

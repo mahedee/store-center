@@ -1,9 +1,9 @@
-// src/api/categoryApi.js
-import axios from './axiosInstance';
+// src/api/categoryApi.js (Legacy - use utils/api/services/categoryService.js instead)
+import apiClient from './axiosInstance';
 
 // GET categories
 export const fetchCategories = (page = 1, size = 10, orderBy = 'Name') => {
-  return axios.get(`/Categories`, {
+  return apiClient.get(`/Categories`, {
     params: {
       PageNumber: page,
       PageSize: size,
@@ -14,15 +14,15 @@ export const fetchCategories = (page = 1, size = 10, orderBy = 'Name') => {
 
 // POST create category
 export const createCategory = (data) => {
-  return axios.post('/Categories', data);
+  return apiClient.post('/Categories', data);
 };
 
 // PUT update category
 export const updateCategory = (id, data) => {
-  return axios.put(`/Categories/${id}`, data);
+  return apiClient.put(`/Categories/${id}`, data);
 };
 
 // DELETE category
 export const deleteCategory = (id) => {
-  return axios.delete(`/Categories/${id}`);
+  return apiClient.delete(`/Categories/${id}`);
 };

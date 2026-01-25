@@ -2,7 +2,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchCategories } from "@/api/categoryApi";
+import { categoryService } from "../../../utils/api/services/categoryService";
 import CategoryTable from "@/components/Category/CategoryTable";
 
 export default function CategoryPage() {
@@ -14,14 +14,15 @@ export default function CategoryPage() {
     const loadCategories = async () => {
       try {
         console.log('Attempting to fetch categories...');
-        const response = await fetchCategories(1, 10, "Name");
-        setCategories(response?.data?.results || []);
+        setLoading(true);
+        const response = await categoryService.getCategories(1, 10, "Name");
+        setCategories(response?.results || []);
       } catch (err) {
         console.error("Detailed error:", err);
         let errorMessage = "Failed to load categories. ";
         
         if (err.code === 'NETWORK_ERROR' || err.message === 'Network Error') {
-          errorMessage += "Backend server appears to be unreachable. Please check if the API server is running on http://localhost:5100";
+          errorMessage += "Backend server appears to be unreachable. Please check if the API server is running.";
         } else if (err.response?.status === 404) {
           errorMessage += "API endpoint not found. Check if the Categories endpoint exists.";
         } else if (err.response?.status >= 500) {

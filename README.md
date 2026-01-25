@@ -117,11 +117,10 @@ Follow these steps to set up StockCenter on your local machine:
 * Start the frontend development server:
    ```bash
    cd StockCenter.Client
-   npm start
+   npm run dev
    ```
 
 * Open your browser and navigate to `http://localhost:3000`.
-
 
 
 ## Usage

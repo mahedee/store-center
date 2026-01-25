@@ -1,6 +1,5 @@
-// src/api/axiosInstance.js (Legacy - use utils/api/client.js instead)
 import axios from 'axios';
-import API_CONFIG from '../utils/api/config';
+import API_CONFIG from './config';
 
 // Create axios instance
 const apiClient = axios.create({
