@@ -1,9 +1,11 @@
 using Microsoft.OpenApi.Models;
 using StoreCenter.Api.Extensions;
+using StoreCenter.Api.Middleware;
 using StoreCenter.Application.Extensions;
 using StoreCenter.Infrastructure.Data;
 using StoreCenter.Infrastructure.Extensions;
 using StoreCenter.Infrastructure.Seeders;
+using Serilog;
 
 namespace StoreCenter.Api
 {
@@ -12,6 +14,15 @@ namespace StoreCenter.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Configure Serilog
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .Enrich.WithTraceIdentifier()
+                .CreateLogger();
+
+            builder.Host.UseSerilog();
 
             // Add services to the container.
 
@@ -82,6 +93,9 @@ namespace StoreCenter.Api
             });
 
             var app = builder.Build();
+
+            // Use global exception handling middleware
+            app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
             // Use CORS
             app.UseCors("AllowFrontend");
