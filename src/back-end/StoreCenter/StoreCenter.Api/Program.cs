@@ -44,7 +44,7 @@ namespace StoreCenter.Api
 
 
             // Add DbContext
-            builder.Services.AddDbContext(builder.Configuration);
+            builder.Services.AddDbContext(builder.Configuration, builder.Environment);
 
             // Add Seed Data
             builder.Services.AddSeedData();
@@ -93,6 +93,12 @@ namespace StoreCenter.Api
             });
 
             var app = builder.Build();
+
+            // Seed database data after app is built
+            if (app.Environment.IsDevelopment())
+            {
+                app.Services.SeedDatabaseData();
+            }
 
             // Use global exception handling middleware
             app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
