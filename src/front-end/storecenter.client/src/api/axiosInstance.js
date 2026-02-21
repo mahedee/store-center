@@ -40,15 +40,46 @@ apiClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    // Handle common errors
-    if (error.response?.status === 401) {
-      // Handle unauthorized - redirect to login
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('authToken');
-        window.location.href = '/login';
+    // Handle new RFC 7807 error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      
+      // Check if it's the new error format (RFC 7807)
+      if (errorData.type && errorData.title && errorData.status && errorData.detail) {
+        // Transform the error for consistent handling
+        const transformedError = {
+          type: errorData.type,
+          title: errorData.title,
+          status: errorData.status,
+          detail: errorData.detail,
+          instance: errorData.instance,
+          traceId: errorData.traceId,
+          errors: errorData.errors || {},
+          isRfc7807Error: true
+        };
+        
+        // Attach transformed error to the error object
+        error.rfc7807Error = transformedError;
+        
+        // Handle common status codes
+        if (error.response.status === 401) {
+          // Handle unauthorized - redirect to login
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login';
+          }
+        }
+        
+        // Log structured error info in development
+        if (process.env.NODE_ENV === 'development') {
+          console.error('API Error (RFC 7807):', transformedError);
+        }
+      } else {
+        // Handle legacy error format
+        if (error.response?.status === 500) {
+          console.error('Server Error:', error.response.data);
+        }
       }
-    } else if (error.response?.status === 500) {
-      console.error('Server Error:', error.response.data);
     }
     
     // Log error in development

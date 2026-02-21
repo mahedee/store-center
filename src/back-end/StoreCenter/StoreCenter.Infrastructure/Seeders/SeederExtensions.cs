@@ -12,15 +12,27 @@ namespace StoreCenter.Infrastructure.Seeders
     {
         public static IServiceCollection AddSeedData(this IServiceCollection services)
         {
-            using (var serviceScope = services.BuildServiceProvider().CreateScope())
+            // Don't seed data during service registration - this will be done at startup instead
+            // using (var serviceScope = services.BuildServiceProvider().CreateScope())
+            // {
+            //     var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            //     context?.SeedCategories();
+            //     context?.SeedRoles();
+            //     context?.SeedBrands();
+            // }
+
+            return services;
+        }
+        
+        public static void SeedDatabaseData(this IServiceProvider serviceProvider)
+        {
+            using (var serviceScope = serviceProvider.CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 context?.SeedCategories();
                 context?.SeedRoles();
                 context?.SeedBrands();
             }
-
-            return services;
         }
     }
 }
