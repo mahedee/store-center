@@ -1,11 +1,22 @@
 # ======================================
 # Store Center Application .gitignore
-# Backend: ASP.NET Core + C#
-# Frontend: Next.js + React
+# 
+# Backend: StoreCenter API (.NET 10.0 + ASP.NET Core Web API)
+#   - Clean Architecture (Api, Application, Domain, Infrastructure)
+#   - JWT Bearer Authentication
+#   - Serilog Logging
+#   - Entity Framework Core
+#   - Swagger/OpenAPI Documentation
+#   
+# Frontend: storecenter.client (Next.js 15 + React 19 + TypeScript)
+#   - TailwindCSS 4 for styling
+#   - TanStack React Query for data fetching
+#   - Axios for HTTP requests
+#   - ESLint for code quality
 # ======================================
 
 # =============================================================================
-# .NET BACKEND (ASP.NET Core)
+# .NET BACKEND - StoreCenter API (.NET 10.0)
 # =============================================================================
 
 # User-specific files
@@ -71,6 +82,15 @@ artifacts/
 appsettings.Development.json
 appsettings.Local.json
 appsettings.*.local.json
+
+# StoreCenter API - Serilog Logs
+**/logs/
+*.log
+logs/*.txt
+
+# Entity Framework Migrations (auto-generated)
+**/Migrations/
+Migration*.cs
 
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
@@ -351,23 +371,34 @@ FodyWeavers.xsd
 **/Migrations/
 
 # =============================================================================
-# NEXT.JS FRONTEND
+# NEXT.JS FRONTEND - storecenter.client (Next.js 15 + React 19 + TypeScript)
 # =============================================================================
 
-# Dependencies
+# Node.js Dependencies
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Next.js build outputs
+# Next.js Build Outputs
 .next/
 out/
 build/
 dist/
+.next.config.js
 
-# Production builds
+# TailwindCSS Generated Files
+# (keeping default tailwind config tracked, add specific ones here if needed)
+
+# TypeScript Build Cache
+*.tsbuildinfo
+.tsbuildinfo
+
+# TanStack React Query DevTools
+# (development only, usually not committed)
+
+# Next.js Production Builds
 *.next/
 .next.config.js
 
@@ -439,10 +470,18 @@ jspm_packages/
 .env.production.local
 .env.staging
 
+# JWT & Authentication Secrets
+jwt.key
+*.jwt
+auth-secrets.*
+
 # Database files
 *.db
 *.sqlite
 *.sqlite3
+
+# Connection Strings (in case they're in separate files)
+connectionstrings.local.*
 
 # =============================================================================
 # DEVELOPMENT TOOLS & EDITORS
@@ -565,28 +604,50 @@ docker-compose.local.yml
 docker-compose.override.yml
 
 # =============================================================================
-# PROJECT SPECIFIC
+# PROJECT SPECIFIC - StoreCenter
 # =============================================================================
 
-# Custom project files
+# Custom project files  
 *.local
 .local/
 local/
 
-# Testing
+# StoreCenter API HTTP Test Files (keep .http files but ignore responses)
+*.http.response
+*.rest.response
+
+# Testing & Coverage
 test-results/
 playwright-report/
 test-results.xml
+TestResults/
+coverage/
+*.lcov
 
-# Storybook
+# Storybook (if used for frontend components)
 .storybook/public
 storybook-static/
 
-# GraphQL
+# API Documentation Generated Files
+api-docs/
+swagger.json
+swagger.yaml
+
+# GraphQL Schema (if auto-generated)
 schema.json
 schema.graphql
+graphql-codegen/
 
-# Tailwind CSS (if generated)
-# Uncomment if using generated Tailwind config
-# tailwind.config.js
-# postcss.config.js
+# TailwindCSS (if using generated utilities)
+# Uncomment if using custom generated Tailwind files
+# tailwind.config.local.js
+# postcss.config.local.js
+
+# React Query DevTools Data
+.reactquery/
+
+# Store Center Specific Ignores
+# Add project-specific files that should not be committed
+project-notes.md
+local-setup.md
+*.personal.*
