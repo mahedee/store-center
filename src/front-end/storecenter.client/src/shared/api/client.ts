@@ -1,8 +1,16 @@
-import axios from 'axios';
-import API_CONFIG from './config';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+
+// API Configuration
+export const API_CONFIG = {
+  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api',
+  TIMEOUT: 10000,
+  DEFAULT_HEADERS: {
+    'Content-Type': 'application/json',
+  },
+};
 
 // Create axios instance
-const apiClient = axios.create({
+const apiClient: AxiosInstance = axios.create({
   baseURL: API_CONFIG.BASE_URL,
   timeout: API_CONFIG.TIMEOUT,
   headers: API_CONFIG.DEFAULT_HEADERS,
@@ -10,7 +18,7 @@ const apiClient = axios.create({
 
 // Request interceptor
 apiClient.interceptors.request.use(
-  (config) => {
+  (config: InternalAxiosRequestConfig) => {
     // Add auth token if available
     const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
     if (token) {
@@ -31,32 +39,26 @@ apiClient.interceptors.request.use(
 
 // Response interceptor
 apiClient.interceptors.response.use(
-  (response) => {
-    // Log response in development
+  (response: AxiosResponse) => {
     if (process.env.NODE_ENV === 'development') {
-      console.log('API Response:', response.status, response.data);
+      console.log('API Response:', response.status, response.config.url, response.data);
     }
     return response;
   },
   (error) => {
-    // Handle common errors
-    if (error.response?.status === 401) {
-      // Handle unauthorized - redirect to login
-      if (typeof window !== 'undefined') {
-        localStorage.removeItem('authToken');
-        window.location.href = '/login';
-      }
-    } else if (error.response?.status === 500) {
-      console.error('Server Error:', error.response.data);
-    }
-    
-    // Log error in development
     if (process.env.NODE_ENV === 'development') {
-      console.error('API Error:', error);
+      console.error('API Error:', error.response?.status, error.config?.url, error.response?.data);
     }
-    
+
+    // Handle 401 Unauthorized
+    if (error.response?.status === 401 && typeof window !== 'undefined') {
+      localStorage.removeItem('authToken');
+      window.location.href = '/login';
+    }
+
     return Promise.reject(error);
   }
 );
 
 export default apiClient;
+export { apiClient };
