@@ -1,10 +1,37 @@
-# StoreCenter - Inventory Management System
+# StoreCenter - Enterprise Inventory Management System
 
-StoreCenter is an open-source inventory management system built with ASP.NET Core Web API, React.js and SQL Server . It helps businesses efficiently manage stock, track inventory, and generate reports.
+StoreCenter is a comprehensive, enterprise-grade inventory management system built with modern technologies and architectural patterns. Featuring a **Clean Architecture** backend powered by **.NET 10.0** and **Entity Framework Core**, **MS SQL Server** paired with a **Next.js 15** frontend using **React 19** and **TypeScript**, this system delivers scalable inventory management solutions for businesses of all sizes.
 
+![](./docs/images/dashboard.png)
 <!-- Add an image here: It can be home page or any feature page -->
 
-## Features
+## 🏗️ **Technical Architecture**
+
+**Backend Stack:**
+- **.NET 10.0 Web API** with Clean Architecture (Domain, Application, Infrastructure, API layers)
+- **Entity Framework Core 10.0** with SQL Server database
+- **JWT Authentication** with role-based authorization and custom permissions
+- **Serilog** structured logging with file and console output
+- **Swagger/OpenAPI** documentation with JWT bearer authentication
+- **Global exception handling** and CORS middleware
+
+**Frontend Stack:**
+- **Next.js 15** with App Router and Server-Side Rendering
+- **React 19** with TypeScript for type safety
+- **TanStack React Query v5** for efficient data fetching and caching  
+- **Tailwind CSS 4** for modern, responsive UI design
+- **Feature-Driven Architecture** with Domain-Driven Design principles
+- **Axios** for API communication with automatic error handling
+
+**Key Features:**
+- **Multi-layered Security:** JWT tokens, role-based permissions, and secure API endpoints
+- **Scalable Architecture:** Microservices-ready backend with clear separation of concerns
+- **Real-time Data:** Optimistic updates and background synchronization
+- **Professional Logging:** Structured logging with trace identifiers and log retention
+- **Database Migrations:** Entity Framework Core migrations with seed data support
+
+
+## Key Features
 - Add, update, and delete inventory items
 - Real-time stock tracking and notifications
 - User authentication and role-based access control
@@ -32,95 +59,122 @@ StoreCenter is an open-source inventory management system built with ASP.NET Cor
 - Detailed documentation and support
 - Regular updates and feature enhancements
 
-## Prerequisites
-Before you begin, ensure you have the following installed:
-- .NET SDK (Version: 7.0 or higher)
-- Node.js (Version: 18 or higher)
-- SQL Server (or any supported database)
-- Git
+## 📋 **Prerequisites**
 
-## Getting Started
-### Installation
-Follow these steps to set up StockCenter on your local machine:
+Before setting up StoreCenter, ensure you have the following tools and environments configured:
 
-*  Clone the repository:
-   ```bash
-   git clone https://github.com/mahedee/store-center.git
-   cd store-center
-   ```
+### **🔧 Development Tools**
+- **[.NET SDK 10.0](https://dotnet.microsoft.com/download)** or higher
+- **[Node.js 18.0+](https://nodejs.org/)** with npm or yarn package manager
+- **[Git](https://git-scm.com/)** for version control
 
-*  Install backend dependencies:
-   ```bash
-   cd backend/StoreCenter/StoreCenter.API
-   dotnet restore
-   
-   cd backend/StoreCenter/StoreCenter.Application
-   dotnet restore
-   
-   cd backend/StoreCenter/StoreCenter.Domain
-   dotnet restore
+### **🗄️ Database Requirements**
+- **[SQL Server 2019+](https://www.microsoft.com/sql-server/)** (Express, Developer, or Enterprise)
+- Alternative options: **SQL Server LocalDB** for development
+- **SQL Server Management Studio (SSMS)** or **Azure Data Studio** (recommended)
 
-   cd backend/StoreCenter/StoreCenter.StoreCenter.Infrastructure
-   dotnet restore
+### **🛠️ Optional but Recommended**
+- **[Visual Studio 2026](https://visualstudio.microsoft.com/)** or **[VS Code](https://code.visualstudio.com/)** with C# extension
+- **[Postman](https://www.postman.com/)** or **[Thunder Client](https://www.thunderclient.com/)** for API testing
+- **[Docker Desktop](https://www.docker.com/products/docker-desktop/)** (for containerized deployment)
 
-   ```
+### **⚡ System Requirements**
+- **OS**: Windows 10/11, macOS 10.15+, or Linux (Ubuntu 18.04+)
+- **RAM**: Minimum 4GB (8GB+ recommended)
+- **Storage**: At least 2GB free space for dependencies and database
+- **Network**: Internet connection for package downloads
 
-* Install frontend dependencies:
-   ```bash
-   cd StoreCenter.Client
-   npm install
-   ```
+### **🔍 Verification Commands**
+Run these commands to verify your installation:
+```bash
+# Check .NET version
+dotnet --version
 
-*  Set up the database:
-   - Create a database name - IMSDB in SQL Server.
-   - Update the connection string in `appsettings.json` in the StoreCenter.API project.
+# Check Node.js version  
+node --version
+npm --version
 
-* Configure the backend application:
-   - Update the `appsettings.json` file with your database connection string and other environment-specific configurations.
-   - Example configuration:
-   ```json
-   {
-       "ConnectionStrings": {
-           "DefaultConnection": "Server=.;Database=IMSDB; User Id = sa; Password = YourPassword; TrustServerCertificate=True;"
-       }
-   }
-   ```
+# Check Git version
+git --version
+```
 
-*  Apply migrations to the database:
-   ```bash
-   cd StoreCenter.API
-   dotnet ef database update
-   ```
+## 🚀 **Getting Started**
 
-* Start the backend server:
-   ```bash
-   cd backend/StoreCenter/StoreCenter.API
-   dotnet run
-   ```
+Get StoreCenter up and running on your local machine in just a few steps:
 
-   Alternatively, to run with HTTPS profile:
+### **📥 Clone Repository**
 
-   ```bash
-   cd backend/StoreCenter/StoreCenter.API
-   dotnet run --launch-profile https
-   ```
-  You can access the application using swagger UI at `https://localhost:5001/swagger/index.html` or `http://localhost:5100/swagger/index.html` depending on your launch profile.
+```bash
+git clone https://github.com/mahedee/store-center.git
+cd store-center
+```
 
-* Configure the frontend application:
-   - Update the `apiUrl` in `src/config.js` with the backend URL.
-   - Example configuration:
-   ```javascript
-   const apiUrl = 'https://localhost:5001/api';
-   export default apiUrl;
-   ```
+### **🔧 Backend Setup (.NET 10.0)**
 
-* Start the frontend development server:
-   ```bash
-   cd StockCenter.Client
-   npm run dev
-   ```
+```bash
+# Navigate to API project and restore all dependencies
+cd backend/StoreCenter/StoreCenter.API
+dotnet restore
 
-* Open your browser and navigate to `http://localhost:3000`.
+# Restore other project dependencies
+cd ../StoreCenter.Application && dotnet restore
+cd ../StoreCenter.Domain && dotnet restore  
+cd ../StoreCenter.Infrastructure && dotnet restore
+```
+
+**Database Configuration:**
+1. Create database named `IMSDB` in SQL Server
+2. Update connection string in `appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=.;Database=IMSDB;User Id=sa;Password=YourPassword;TrustServerCertificate=True;"
+  }
+}
+```
+
+**Apply migrations and start server:**
+```bash
+cd backend/StoreCenter/StoreCenter.API
+dotnet ef database update
+dotnet run
+```
+
+**🌐 Backend Available:** `http://localhost:8080/swagger/index.html`
+
+### **🎨 Frontend Setup (Next.js 15)**
+
+```bash
+# Install frontend dependencies
+cd StoreCenter.Client
+npm install
+```
+
+**Configure API connection in `.env.local`:**
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8080/api
+```
+
+**Start development server:**
+```bash
+npm run dev
+```
+
+**🌐 Frontend Available:** `http://localhost:3000`
+
+### **🔑 Login Credentials**
+
+- **Username:** `admin`
+- **Password:** `P@ssW0rd`
+
+### **✅ Quick Verification**
+
+1. Ensure SQL Server is running
+2. Backend: Visit `http://localhost:8080/swagger/index.html`
+3. Frontend: Open `http://localhost:3000`
+4. Login and start managing inventory!
+
 
 
 ## Usage
