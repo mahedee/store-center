@@ -1,17 +1,22 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/shared/components/ui/Button';
 import { Input } from '@/shared/components/ui/Input';
 import { useCategoryMutations } from '../hooks/useCategories';
+import { Category } from '../types';
 
 interface CategoryFormProps {
+  initialData?: Category;
+  isEditMode?: boolean;
   onSuccess?: () => void;
   onCancel?: () => void;
 }
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({ 
+  initialData,
+  isEditMode = false,
   onSuccess, 
   onCancel 
 }) => {
@@ -20,7 +25,15 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   
   const router = useRouter();
-  const { createCategory } = useCategoryMutations();
+  const { createCategory, updateCategory } = useCategoryMutations();
+
+  // Initialize form data when initialData is provided (edit mode)
+  useEffect(() => {
+    if (initialData) {
+      setName(initialData.name);
+      setDescription(initialData.description || '');
+    }
+  }, [initialData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,10 +51,20 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     }
 
     try {
-      await createCategory.mutateAsync({
-        name: name.trim(),
-        description: description.trim() || undefined,
-      });
+      if (isEditMode && initialData) {
+        await updateCategory.mutateAsync({
+          id: initialData.id,
+          data: {
+            name: name.trim(),
+            description: description.trim() || undefined,
+          }
+        });
+      } else {
+        await createCategory.mutateAsync({
+          name: name.trim(),
+          description: description.trim() || undefined,
+        });
+      }
 
       if (onSuccess) {
         onSuccess();
@@ -73,7 +96,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-bold mb-4">Create New Category</h2>
+        <h2 className="text-xl font-bold mb-4">
+          {isEditMode ? 'Edit Category' : 'Create New Category'}
+        </h2>
         
         {errors.general && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700">
@@ -113,15 +138,18 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
               type="button"
               variant="outline"
               onClick={handleCancel}
-              disabled={createCategory.isPending}
+              disabled={createCategory.isPending || updateCategory.isPending}
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              disabled={createCategory.isPending}
+              disabled={createCategory.isPending || updateCategory.isPending}
             >
-              {createCategory.isPending ? 'Creating...' : 'Create Category'}
+              {isEditMode 
+                ? (updateCategory.isPending ? 'Updating...' : 'Update Category')
+                : (createCategory.isPending ? 'Creating...' : 'Create Category')
+              }
             </Button>
           </div>
         </div>
